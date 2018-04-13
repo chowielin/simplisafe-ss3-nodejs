@@ -71,6 +71,21 @@ SS3Client.prototype.initToken = function() {
 	})
 }
 
+SS3Client.prototype.logout = function() {
+	var thisObj = this
+	return this.authCheck()
+		.then(function() {
+			var reqOptions = {
+				url: 'https://api.simplisafe.com/v1/api/token',
+				json: true,
+				jar: true
+			}
+			return thisObj.invokeSSDelete(reqOptions)
+		}, function() {
+			log('SS3Client no need to delete token as it is invalid: ' + thisObj.token)
+		})
+}
+
 SS3Client.prototype.isExpired = function() {
 	var currDate = new Date()
 	return currDate > this.expireDate
@@ -138,6 +153,26 @@ SS3Client.prototype.invokeSSPost = function(reqOptions) {
 			}
 			return request.post(reqOptions)
 		})
+}
+
+SS3Client.prototype.invokeSSDelete = function(reqOptions, initTokenIfNeeded) {
+	var thisObj = this
+	var initTokenPromise
+	if (initTokenIfNeeded) {
+		initTokenPromise = this.initTokenIfNeeded()
+	}
+	var deleteReqFunc = function() {
+		reqOptions.headers = {
+			'Content-Type': 'application/json; charset=utf-8',
+			'Authorization': thisObj.token_type + ' ' + thisObj.token
+		}
+		return request.delete(reqOptions)
+	}
+	if (initTokenPromise) {
+		return initTokenPromise.then(deleteReqFunc)
+	} else {
+		return deleteReqFunc()
+	}
 }
 
 SS3Client.prototype.initUserId = function() {
