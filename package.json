@@ -1,6 +1,6 @@
 {
   "name": "simplisafe-ss3",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A NodeJS client library to interact with the SimpliSafe ss3 versioned REST API.",
   "license": "MIT",
   "keywords": [

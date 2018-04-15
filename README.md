@@ -19,6 +19,13 @@ ss3Client.login()
 			throw err
 		})
 ```
+## Logout
+```
+ss3Client.logout()
+		.then(function() {
+			console.log('Logged out')
+		})
+```
 ## Get Alarm State
 ```
 ss3Client.getAlarmState()
