@@ -1,3 +1,6 @@
+# NOTE
+This project is archived and no longer maintained. Please instead refer to: https://github.com/nzapponi/homebridge-simplisafe3
+
 # simplisafe-ss3
 SimpliSafe ss3 versioned REST API NodeJS client
 # Install
